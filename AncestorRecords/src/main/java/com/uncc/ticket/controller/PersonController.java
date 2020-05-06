@@ -37,7 +37,7 @@ public class PersonController {
         PersonEntity person = user.getPerson();
         model.addAttribute("relation", new RelationEntity(person,person,"unknown"));
         model.addAttribute("persons", personService.getAllPersons());
-
+        model.addAttribute("user", user.getPerson());
         return "search/searchResult";
     }
 
@@ -83,5 +83,16 @@ public class PersonController {
         model.addAttribute("person", new PersonEntity());
         model.addAttribute("persons", personService.getAllPersons());
         return "persons/myProfile";
+    }
+
+    @RequestMapping(value = "/persons/profiles/{id}", method = RequestMethod.GET)
+    public String showProfile(Model model, Principal principal, @PathVariable("id") Long id) {
+        PersonEntity person = personService.findById(id);
+        model.addAttribute("person", person);
+
+        return "persons/profile";
+
+
+
     }
 }
